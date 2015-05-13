@@ -1,0 +1,44 @@
+body {
+  background-image: url("/images/pattern-bg.png");
+}
+
+.jumbotron {
+  padding-top: 200px;	
+  background-image: url("/images/pattern-bg.png"); 		
+}
+
+h1 h2 h3 h4 h5 p {
+    font-family: Sans-serif;
+}
+
+p {
+	margin-top: 20px;
+	font-size: 140%;
+	color: #A99113;
+	text-align: center;
+}
+
+p.access_text {
+    margin-top: 20px;
+	font-size: 100%;
+	color: #D4D1C6;
+	text-align: center;	
+}
+
+span.dark_gold {
+	margin-left: 20px;
+    color: #76650D;
+}
+
+div.progress {
+	margin-left: auto;
+	margin-right: auto;
+	width: 70%;
+	margin-top: 30px;
+}
+
+.login_logo {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

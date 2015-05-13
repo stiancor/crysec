@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='/javascripts/jquery-2.1.4.min.js')
+    script(src='/javascripts/bootstrap.min.js')
+    script(src='/javascripts/main.js')
+  body
+    div.container
+      div(class="header clearfix")
+      div.jumbotron
+        block content
