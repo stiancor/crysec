@@ -1,14 +1,26 @@
 extends layout
 
 block content
-  h1.
+  h1.game.
     Create new game
   form(id='createGame' action='create')
-    input(name="name", placeholder="Name of game...")
-    textarea(name="secret")
-    select(name="parties")
-      for item in [2,3,4,5,6,7,8,9,10]
-        option #{item}
-    select(name="threshold")
-      for item in [2,3,4,5,6,7,8,9,10]
-        option #{item}
+    div.form-group
+      label(for="nameInput").
+        Game Name
+      input(name="name", placeholder="Name of game..." class="form-control" id="nameInput")
+    div.form-group
+      label(for="secretInput").
+        Secret text  
+      textarea(name="secret" placeholder="Text to encrypt" class="form-control" id="secretInput")
+    div.form-group
+      label(for="partiesInput").
+        Number of parties
+      select(name="parties" class="form-control" id="partiesInput")
+        for item in [2,3,4,5,6,7,8,9,10]
+          option #{item}
+    div.form-group
+      label(for=thresholdInput).
+        Threshold  
+      select(name="threshold" class="form-control" id="thresholdInput")
+        for item in [1,2,3,4,5,6,7,8,9,10]
+          option #{item}

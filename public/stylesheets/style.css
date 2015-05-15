@@ -11,6 +11,14 @@ h1 h2 h3 h4 h5 p {
     font-family: Sans-serif;
 }
 
+h1.game {
+	color: #CCC;
+}
+
+form {
+	color: #CCC;
+}
+
 p {
 	margin-top: 20px;
 	font-size: 140%;
