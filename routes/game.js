@@ -3,7 +3,7 @@ var secrets = require('secrets.js');
 var router = express.Router();
 
 router.get('/new', function(req, res, next) {
-  res.render('new');
+  res.render('game/new');
 });
 
 router.post('/create', function(req, res, next) {
