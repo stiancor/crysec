@@ -4,7 +4,7 @@ var router = express.Router();
 var validate = require('../validators/game/new.js');
 
 router.get('/new', function(req, res, next) {
-  res.render('game/new');
+  res.render('game/new', {errors: {}});
 });
 
 router.post('/create', function(req, res, next) {

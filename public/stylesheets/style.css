@@ -50,3 +50,7 @@ div.progress {
     margin-left: auto;
     margin-right: auto;
 }
+
+div.has-error .form-control {
+	border-width: 4px;
+}
