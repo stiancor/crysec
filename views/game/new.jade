@@ -4,14 +4,13 @@ block content
   h1.game.
     Create new game
   if Object.keys(errors).length != 0
-      div(class="alert alert-danger" role="alert")
-        span(class="glyphicon glyphicon-exclamation-sign" aria-hidden="true")
-          &nbsp;
-        span."sr-only".
-          Error:
-        for error in errors
-          p.
-            #{error}
+    div(class="alert alert-danger" role="alert")
+      span(class="glyphicon glyphicon-exclamation-sign" aria-hidden="true")
+      span."sr-only".
+        &nbsp;Errors:
+      for error in errors
+        p.
+          #{error}
   form(id='createGame' action='create' method='post')
     div(class=errors.name != undefined ? "form-group has-error" : "form-group")
       label(for="nameInput").
