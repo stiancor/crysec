@@ -8,11 +8,13 @@ router.get('/new', function(req, res, next) {
 });
 
 router.post('/create', function(req, res, next) {
-  var validated = validate(req, res);
-  if (Object.keys(validated.errors).length === 0) {
+  var v = validate(req, res);
+  if (Object.keys(v.errors).length === 0) {
+  	var secretHex = secrets.str2hex(v.secret);
+    var shares = secrets.share(secretHex, parseInt(v.parties), parseInt(v.threshold));    
   	res.json({token: "accepted", percentage: 50});	
   } else {
-    res.render('game/new', validated);	
+    res.render('game/new', v);	
   }
 });
 
