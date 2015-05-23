@@ -17,7 +17,7 @@ module.exports = function(req, res, next) {
   	v.errors.parties = 'Not a valid number of parties';
   }
   var tempThres = parseInt(v.threshold);
-  if(tempThres < 1 || tempThres > 10) {
+  if(tempThres < 2 || tempThres > 10) {
   	v.errors.tempThres = 'Not a valid threshold';
   }
   return v;
