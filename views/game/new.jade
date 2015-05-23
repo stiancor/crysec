@@ -11,7 +11,7 @@ block content
     div(class=errors.secret != undefined ? "form-group has-error" : "form-group")
       label(for="secretInput").
         Secret text  
-      textarea(name="secret" placeholder="Secret to encrypt" class="form-control" id="secretInput")
+      textarea(name="secret" placeholder="Secret to encrypt" rows="8" class="form-control" id="secretInput")
         = secret
     div(class=errors.parties != undefined ? "form-group has-error" : "form-group")
       label(for="partiesInput").
