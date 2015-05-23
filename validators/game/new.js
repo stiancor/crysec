@@ -20,7 +20,6 @@ module.exports = function(req, res, next) {
   if(tempThres < 1 || tempThres > 10) {
   	v.errors.tempThres = 'Not a valid threshold';
   }
-  console.log(v);
   return v;
 };
 
