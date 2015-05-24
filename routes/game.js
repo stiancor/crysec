@@ -10,8 +10,24 @@ router.get('/new', function(req, res, next) {
 router.post('/create', function(req, res, next) {
   var v = validate(req, res);
   if (Object.keys(v.errors).length === 0) {
-  	var secretHex = secrets.str2hex(v.secret);
-    var shares = secrets.share(secretHex, parseInt(v.parties), parseInt(v.threshold));    
+    var shares = secrets.share(secrets.str2hex(v.secret), parseInt(v.parties), parseInt(v.threshold));    
+    var secretRef = secrets.random(128);
+
+    var game = req.body;
+    delete game['secret']; 
+    game['_id'] = secretRef;
+    var shares = shares.map(function(obj){
+    	return {share: obj, gameId: secretRef}
+    });
+    var dataToSave = [game].concat(shares);
+
+    var games = req.db.get('games');
+    games.insert(dataToSave, function (err, doc) {
+  		if (err) throw err;
+	});
+    games.find({},{},function(e,docs) {
+    	console.log(docs);
+    });
   	res.redirect('show/?id=' + secrets.random(128));	
   } else {
     res.render('game/new', v);	
@@ -19,7 +35,6 @@ router.post('/create', function(req, res, next) {
 });
 
 router.get('/create', function(req, res, next) {	
-  console.log('Testing');
   res.redirect('new');
 });
 
