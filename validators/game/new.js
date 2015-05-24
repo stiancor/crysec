@@ -9,8 +9,8 @@ module.exports = function(req, res, next) {
   if(v.name == undefined || v.name.length < 1) {
   	v.errors.name = 'Please supply a name';
   }
-  if(v.secret == undefined || v.secret.length < 20) {
-  	v.errors.secret = 'Secret needs to be more than 20 characters';
+  if(v.secret == undefined || v.secret.length < 10) {
+  	v.errors.secret = 'Secret needs to be at least 10 characters';
   }
   var tempPart = parseInt(v.parties);
   if(tempPart < 2 || tempPart > 10) {
