@@ -1,37 +1,46 @@
-extends ../layout
+extends ../admin-layout
 
 block content
   h1.game.
     Create new game
-  if Object.keys(errors).length != 0
-    div(class="alert alert-danger" role="alert")
-      span(class="glyphicon glyphicon-exclamation-sign" aria-hidden="true")
-      span."sr-only".
-        &nbsp;Errors:
-      for error in errors
-        p.
-          #{error}
   form(id='createGame' action='create' method='post')
     div(class=errors.name != undefined ? "form-group has-error" : "form-group")
       label(for="nameInput").
         Name
       input(name="name", placeholder="Name of game..." value= name class="form-control" id="nameInput")
+    if errors.name
+      div(class='has-error')
+        p(class='help-block error')
+          = errors.name  
     div(class=errors.secret != undefined ? "form-group has-error" : "form-group")
       label(for="secretInput").
         Secret text  
       textarea(name="secret" placeholder="Secret to encrypt" rows="8" class="form-control" id="secretInput")
         = secret
+    if errors.secret
+      div(class='has-error')
+        p(class='help-block error')
+          = errors.secret    
     div(class=errors.parties != undefined ? "form-group has-error" : "form-group")
       label(for="partiesInput").
         Number of parties
       select(name="parties" class="form-control" id="partiesInput")
         for item in [2,3,4,5,6,7,8,9,10]
           option(value="#{item}" selected=parties==item) #{item}
+    if errors.parties
+      div(class='has-error')
+        p(class='help-block error')
+          = errors.parties      
     div(class=errors.threshold != undefined ? "form-group has-error" : "form-group")
       label(for=thresholdInput).
         Threshold  
       select(name="threshold" class="form-control" id="thresholdInput")
         for item in [2,3,4,5,6,7,8,9,10]
           option(value="#{item}" selected=threshold==item) #{item}
-    button(type="submit" class="btn btn-primary btn-lg pull-right").
-      Create game
+    if errors.threshold
+      div(class='has-error')
+        p(class='help-block error')
+          = errors.threshold      
+    div.btn-toolbar
+      button(type="submit" class="btn btn-primary btn-lg pull-right").
+        Create game
