@@ -8,7 +8,7 @@ var secrets = require('secrets.js');
 
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/nodetest1');
+var db = monk('localhost:27017/crysec');
 
 var routes = require('./routes/index');
 var login = require('./routes/login');
