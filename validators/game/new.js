@@ -18,7 +18,9 @@ module.exports = function(req, res, next) {
   }
   var tempThres = parseInt(v.threshold);
   if(tempThres < 2 || tempThres > 10) {
-  	v.errors.tempThres = 'Not a valid threshold';
+  	v.errors.threshold = 'Not a valid threshold';
+  } else if (tempPart < tempThres) {
+    v.errors.threshold = 'Threshold cannot be heigher than number of parties';
   }
   return v;
 };
