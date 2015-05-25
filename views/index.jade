@@ -12,7 +12,7 @@ block content
       p.access_text.
         SCAN VALID ACCESS TOKENS TO LOG IN
       div(class="progress spacing-top" id="progressBar")
-        div(class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="#{percent}" aria-valuemin="0" aria-valuemax="100" style="width: #{percent}%")
+        div(class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="#{percent}" aria-valuemin="0" aria-valuemax="100" style="width: #{percent}%")
           span(class="sr-only").
             35% Complete
       form(id="tokenForm" action="/verify") 
