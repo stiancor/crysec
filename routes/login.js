@@ -12,7 +12,6 @@ router.post('/', function(req, res, next) {
   		res.sendStatus(404);
   	} else {
   		games.findAndModify({gameId: id, tagRef: token}, {$set: {isScanned: true}}, function(err, doc) {
-  		console.log(doc);
   			games.find({gameId: id, isScanned: true}, function(err, doc) {
   				res.render('game/progress', {percent: ((doc.length) / game.threshold)*100})
   			})

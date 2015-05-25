@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/:id', function(req, res, next) {
-  console.log(req.params.id)
   var games = req.db.get('games');	
   games.findOne({ ref: req.params.id }, function(err, game) {
   	if(err) throw err;
