@@ -10,10 +10,10 @@ $(document).ready(function() {
             setTimeout(function(){
                 if (chars.length >= 9) {
                     var tagCode = chars.join("");
-                    console.log("RFID Scanned: " + tagCode);
-                    // assign value to some input (or do whatever you want)
                     $("#tokenField").val(tagCode);
-                    $.post( $('#tokenForm').attr('action'), $( "#tokenForm" ).serialize() );
+                    $.post( $('#tokenForm').attr('action'), $( "#tokenForm" ).serialize(), function(data) {
+                        $('#progressBar').html(data);
+                    });
                 }
                 chars = [];
                 pressed = false;

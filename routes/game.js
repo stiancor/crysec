@@ -39,33 +39,42 @@ router.get('/show/:id', function(req, res, next) {
   games.findOne({ ref: req.params.id }, function(err, doc) {
   	if (err) 
   	  throw err;
-  	res.render('game/show', doc);
+  	if(doc != null) 
+  	  res.render('game/show', doc);
+    else 
+      res.send(404);
   });    
 });
 
 router.post('/concede', function(req, res, next) {
   var games = req.db.get('games');
   games.findOne({ ref: req.body.uuidCode }, function(err, doc) {
-  	if (err) 
+    if (err) 
   	  throw err;
-    console.log(doc);
-  	if(doc.parties > doc.connectedParties) {
-  		games.find({gameId: doc.ref}, function(err, doc) {
-  			if (err)
-      			throw err;
-      		var firstNotConnected = doc.filter(function(obj) {return obj.tagRef === ''})[0];
-      		firstNotConnected.tagRef = req.body.token;
-      		games.update({_id: firstNotConnected._id}, {$set: firstNotConnected}, function(err, doc) {
-      		    if(err) 
-      		    	throw err;      		   
-      		    console.log(doc);
-      		    res.render('game/progress', {percent:50})
-      		});	
+  	if(doc != null) {
+  	  	if(doc.parties > doc.connectedParties) {
+  			var totParties = parseInt(doc.parties);
+  			games.find({gameId: doc.ref}, function(err, doc) {
+  		  	if (err)
+      	    	throw err;
+      	  	var connectedTags = doc.filter(function(obj) {return obj.tagRef.length > 0}).length;
+      	  	if(doc.filter(function(obj) {return obj.tagRef === req.body.token}).length < 1 && connectedTags < totParties) {
+      	    	var firstNotConnected = doc.filter(function(obj) {return obj.tagRef === ''})[0];
+      			firstNotConnected.tagRef = req.body.token;
+      			games.update({_id: firstNotConnected._id}, {$set: firstNotConnected}, function(err, doc) {
+      		  		if(err) 
+      		    		throw err;      		   
+      		    	console.log(((connectedTags + 1) /totParties)*100)
+      		      	res.render('game/progress', {percent: ((connectedTags + 1) /totParties)*100})
+      			});
+      		} else {
+      			res.render('game/progress', {percent: (connectedTags/totParties)*100})
+      		}	
   		});	
   	}
+  	else res.send(404);
+  }
   });    
-  
-  //res.json({token: "accepted", percentage: 50});
 });
 
 module.exports = router;
