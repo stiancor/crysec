@@ -13,9 +13,9 @@ router.post('/create', function(req, res, next) {
     var shares = secrets.share(secrets.str2hex(v.secret), parseInt(v.parties), parseInt(v.threshold));    
     var secretRef = secrets.random(128);
 
-    var game = {name: req.body.name, parties: req.body.parties, threshold: req.body.threshold, active: false, ref: secretRef}
+    var game = {name: req.body.name, parties: req.body.parties, threshold: req.body.threshold, connectedParties: 0, ref: secretRef}
     var shares = shares.map(function(obj){
-    	return {share: obj, gameId: secretRef}
+    	return {share: obj, gameId: secretRef, tagRef: ''}
     });
     var dataToSave = [game].concat(shares);
 
@@ -38,13 +38,34 @@ router.get('/show/:id', function(req, res, next) {
   var games = req.db.get('games');
   games.findOne({ ref: req.params.id }, function(err, doc) {
   	if (err) 
-  		throw err;
+  	  throw err;
   	res.render('game/show', doc);
   });    
 });
 
-router.post('/concede', function(req, res, next) {	
-  res.json({token: "accepted", percentage: 50});
+router.post('/concede', function(req, res, next) {
+  var games = req.db.get('games');
+  games.findOne({ ref: req.body.uuidCode }, function(err, doc) {
+  	if (err) 
+  	  throw err;
+    console.log(doc);
+  	if(doc.parties > doc.connectedParties) {
+  		games.find({gameId: doc.ref}, function(err, doc) {
+  			if (err)
+      			throw err;
+      		var firstNotConnected = doc.filter(function(obj) {return obj.tagRef === ''})[0];
+      		firstNotConnected.tagRef = req.body.token;
+      		games.update({_id: firstNotConnected._id}, {$set: firstNotConnected}, function(err, doc) {
+      		    if(err) 
+      		    	throw err;      		   
+      		    console.log(doc);
+      		    res.render('game/progress', {percent:50})
+      		});	
+  		});	
+  	}
+  });    
+  
+  //res.json({token: "accepted", percentage: 50});
 });
 
 module.exports = router;
