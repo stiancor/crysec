@@ -9,11 +9,11 @@ $(document).ready(function() {
         if (pressed == false) {
             setTimeout(function(){
                 if (chars.length >= 9) {
-                    var barcode = chars.join("");
-                    console.log("RDID Scanned: " + barcode);
+                    var tagCode = chars.join("");
+                    console.log("RFID Scanned: " + tagCode);
                     // assign value to some input (or do whatever you want)
-                    $("#tokenField").val(barcode);
-                    $.post( "verify", $( "#tokenForm" ).serialize() );
+                    $("#tokenField").val(tagCode);
+                    $.post( $('#tokenForm').attr('action'), $( "#tokenForm" ).serialize() );
                 }
                 chars = [];
                 pressed = false;

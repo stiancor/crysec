@@ -43,7 +43,7 @@ router.get('/show/:id', function(req, res, next) {
   });    
 });
 
-router.post('/concede', function(req, res, next) {
+router.post('/concede', function(req, res, next) {	
   res.json({token: "accepted", percentage: 50});
 });
 
