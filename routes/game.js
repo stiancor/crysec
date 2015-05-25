@@ -13,7 +13,7 @@ router.post('/create', function(req, res, next) {
     var shares = secrets.share(secrets.str2hex(v.secret), parseInt(v.parties), parseInt(v.threshold));    
     var secretRef = secrets.random(128);
 
-    var game = {name: req.body.name, parties: req.body.parties, threshold: req.body.threshold, connectedParties: 0, ref: secretRef}
+    var game = {name: req.body.name, parties: parseInt(req.body.parties), threshold: parseInt(req.body.threshold), connectedParties: 0, ref: secretRef}
     var shares = shares.map(function(obj){
     	return {share: obj, gameId: secretRef, tagRef: ''}
     });
@@ -39,41 +39,46 @@ router.get('/show/:id', function(req, res, next) {
   games.findOne({ ref: req.params.id }, function(err, doc) {
   	if (err) 
   	  throw err;
-  	if(doc != null) 
+  	if(doc != null) {
+  	  doc.percent = doc.connectedParties / doc.parties * 100;	
   	  res.render('game/show', doc);
+  	}  
     else 
-      res.send(404);
+      res.sendStatus(404);
   });    
 });
 
 router.post('/concede', function(req, res, next) {
   var games = req.db.get('games');
-  games.findOne({ ref: req.body.uuidCode }, function(err, doc) {
-    if (err) 
-  	  throw err;
-  	if(doc != null) {
-  	  	if(doc.parties > doc.connectedParties) {
-  			var totParties = parseInt(doc.parties);
-  			games.find({gameId: doc.ref}, function(err, doc) {
+  games.findOne({ ref: req.body.uuidCode }, function(err, game) {
+  	if (err) 
+  		throw err;
+  	if(game != null) {
+  	  	if(game.parties > game.connectedParties) {
+  			games.find({gameId: game.ref}, function(err, doc) {
   		  	if (err)
       	    	throw err;
       	  	var connectedTags = doc.filter(function(obj) {return obj.tagRef.length > 0}).length;
-      	  	if(doc.filter(function(obj) {return obj.tagRef === req.body.token}).length < 1 && connectedTags < totParties) {
+      	  	if(doc.filter(function(obj) {return obj.tagRef === req.body.token}).length < 1 && connectedTags < game.parties) {
       	    	var firstNotConnected = doc.filter(function(obj) {return obj.tagRef === ''})[0];
       			firstNotConnected.tagRef = req.body.token;
       			games.update({_id: firstNotConnected._id}, {$set: firstNotConnected}, function(err, doc) {
       		  		if(err) 
-      		    		throw err;      		   
-      		    	console.log(((connectedTags + 1) /totParties)*100)
-      		      	res.render('game/progress', {percent: ((connectedTags + 1) /totParties)*100})
+      		    		throw err;      		
+      		    	game.connectedParties++;	   
+      		    	games.update({_id: game._id}, {$set: game}, function(err,doc){
+      		    		if(err) throw error;
+      		    		res.render('game/progress', {percent: ((game.connectedParties) /game.parties)*100})
+      		    	});	
       			});
       		} else {
-      			res.render('game/progress', {percent: (connectedTags/totParties)*100})
+      			res.render('game/progress', {percent: (game.connectedParties/game.parties)*100})
       		}	
-  		});	
-  	}
-  	else res.send(404);
-  }
+  			});	
+  		} 
+  		else res.render('game/progress', {percent: 100})
+  	} 
+  	else res.sendStatus(404);
   });    
 });
 
