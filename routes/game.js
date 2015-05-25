@@ -13,9 +13,7 @@ router.post('/create', function(req, res, next) {
     var shares = secrets.share(secrets.str2hex(v.secret), parseInt(v.parties), parseInt(v.threshold));    
     var secretRef = secrets.random(128);
 
-    var game = req.body;
-    delete game['secret']; 
-    game['_id'] = secretRef;
+    var game = {name: req.body.name, parties: req.body.parties, threshold: req.body.threshold, active: false, '_id': secretRef}
     var shares = shares.map(function(obj){
     	return {share: obj, gameId: secretRef}
     });
@@ -28,7 +26,7 @@ router.post('/create', function(req, res, next) {
     games.find({},{},function(e,docs) {
     	console.log(docs);
     });
-  	res.redirect('show/?id=' + secrets.random(128));	
+  	res.redirect('show/' + secrets.random(128));	
   } else {
     res.render('game/new', v);	
   }
@@ -38,8 +36,8 @@ router.get('/create', function(req, res, next) {
   res.redirect('new');
 });
 
-router.get('/show', function(req, res, next) {
-  console.log(req.query.id)	
+router.get('/show/:id', function(req, res, next) {
+  console.log(req.param.id)	
   res.render('game/show', {message: req.query.id});
 });
 
