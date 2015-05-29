@@ -49,37 +49,42 @@ router.get('/show/:id', function(req, res, next) {
 });
 
 router.post('/concede', function(req, res, next) {
-  var games = req.db.get('games');
-  games.findOne({ ref: req.body.uuidCode }, function(err, game) {
-  	if (err) 
-  		throw err;
-  	if(game != null) {
-  	  	if(game.parties > game.connectedParties) {
-  			games.find({gameId: game.ref}, function(err, doc) {
-  		  	if (err)
-      	    	throw err;
-      	  	var connectedTags = doc.filter(function(obj) {return obj.tagRef.length > 0}).length;
-      	  	if(doc.filter(function(obj) {return obj.tagRef === req.body.token}).length < 1 && connectedTags < game.parties) {
-      	    	var firstNotConnected = doc.filter(function(obj) {return obj.tagRef === ''})[0];
-      			firstNotConnected.tagRef = req.body.token;
-      			games.update({_id: firstNotConnected._id}, {$set: firstNotConnected}, function(err, doc) {
-      		  		if(err) 
-      		    		throw err;      		
-      		    	game.connectedParties++;	   
-      		    	games.update({_id: game._id}, {$set: game}, function(err,doc){
-      		    		if(err) throw error;
-      		    		res.render('game/progress', {percent: ((game.connectedParties) /game.parties)*100})
-      		    	});	
-      			});
-      		} else {
-      			res.render('game/progress', {percent: (game.connectedParties/game.parties)*100})
-      		}	
-  			});	
+  	var token = req.body.token;	
+  	if(token == null || /^\d+$/.test(token) == false || token.length != 10) {
+  		console.log(token);
+  	} else {
+  		var games = req.db.get('games');
+  		games.findOne({ ref: req.body.uuidCode }, function(err, game) {
+  		if (err) 
+  			throw err;
+  		if(game != null) {
+  	  		if(game.parties > game.connectedParties) {
+  				games.find({gameId: game.ref}, function(err, doc) {
+  		  			if (err)
+      	    			throw err;
+      	  			var connectedTags = doc.filter(function(obj) {return obj.tagRef.length > 0}).length;
+      	  			if(doc.filter(function(obj) {return obj.tagRef === req.body.token}).length < 1 && connectedTags < game.parties) {
+      	    			var firstNotConnected = doc.filter(function(obj) {return obj.tagRef === ''})[0];
+      					firstNotConnected.tagRef = token;
+      					games.update({_id: firstNotConnected._id}, {$set: firstNotConnected}, function(err, doc) {
+      		  				if(err) 
+      		    				throw err;      		
+      		    			game.connectedParties++;	   
+      		    			games.update({_id: game._id}, {$set: game}, function(err,doc){
+      		    			if(err) throw error;
+      		    			res.render('game/progress', {percent: ((game.connectedParties) /game.parties)*100})
+      		    		});	
+      				});
+      				} else {
+      					res.render('game/progress', {percent: (game.connectedParties/game.parties)*100})
+      				}	
+  				});	
+  			} 
+  			else res.render('game/progress', {percent: 100})
   		} 
-  		else res.render('game/progress', {percent: 100})
-  	} 
-  	else res.sendStatus(404);
-  });    
+  		else res.sendStatus(404);
+	  	});    
+	}
 });
 
 module.exports = router;
