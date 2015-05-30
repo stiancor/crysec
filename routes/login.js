@@ -13,7 +13,7 @@ router.post('/', function(req, res, next) {
   		} else {
   			games.findAndModify({gameId: id, tagRef: token}, {$set: {isScanned: true}}, function(err, doc) {
   				games.find({gameId: id, isScanned: true}, function(err, doc) {
-  					res.render('game/progress', {percent: ((doc.length) / game.threshold)*100})
+  					res.render('includes/progressbar', {percent: ((doc.length) / game.threshold)*100})
   				})
   			});		
   		}
