@@ -6,3 +6,13 @@
 div.jumbotron {
 	margin-top: 30px;
 }
+
+p.game-url {
+	text-align: center;
+}
+
+p.game-url a {
+	color: #222;
+	text-decoration: underline;
+	font-size: 1.4em;
+}

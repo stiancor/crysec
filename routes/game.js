@@ -40,7 +40,8 @@ router.get('/show/:id', function(req, res, next) {
   	if (err) 
   	  throw err;
   	if(doc != null) {
-  	  doc.percent = doc.connectedParties / doc.parties * 100;	
+  	  doc.percent = doc.connectedParties / doc.parties * 100;
+  	  doc.id = req.params.id;
   	  res.render('game/show', doc);
   	}  
     else 
@@ -49,12 +50,13 @@ router.get('/show/:id', function(req, res, next) {
 });
 
 router.post('/concede', function(req, res, next) {
-  	var token = req.body.token;	
+  	var token = req.body.token;
+  	var id = req.body.uuidCode;	
   	if(token == null || /^\d+$/.test(token) == false || token.length != 10) {
   		console.log(token);
   	} else {
   		var games = req.db.get('games');
-  		games.findOne({ ref: req.body.uuidCode }, function(err, game) {
+  		games.findOne({ ref: id }, function(err, game) {
   		if (err) 
   			throw err;
   		if(game != null) {
@@ -72,11 +74,11 @@ router.post('/concede', function(req, res, next) {
       		    			game.connectedParties++;	   
       		    			games.update({_id: game._id}, {$set: game}, function(err,doc){
       		    			if(err) throw error;
-      		    			res.render('game/progress', {percent: ((game.connectedParties) /game.parties)*100})
+      		    			res.render('game/progress', {percent: ((game.connectedParties) /game.parties)*100, id: id})
       		    		});	
       				});
       				} else {
-      					res.render('game/progress', {percent: (game.connectedParties/game.parties)*100})
+      					res.render('game/progress', {percent: (game.connectedParties/game.parties)*100, id: id})
       				}	
   				});	
   			} 

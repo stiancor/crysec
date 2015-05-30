@@ -22,9 +22,8 @@ block content
   p
     strong.
       Tag registration status
-  div(class="progress" id="progressBar")
-    div(class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="#{percent}" aria-valuemin="0" aria-valuemax="100" style="width: #{percent}%")
-      span(class="sr-only")
+  div(id="progressBar")      
+    include progress.jade
   form(id="tokenForm" action="/game/concede") 
     input(name="uuidCode" type="hidden" id="uuidField" value="#{ref}")
     input(name="token" type="hidden" id="tokenField")           

@@ -11,13 +11,8 @@ block content
           PROPERTY OF THE CIA
       p.access_text.
         SCAN VALID ACCESS TOKENS TO LOG IN
-      div(class="progress spacing-top" id="progressBar")
-        div(class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="#{percent}" aria-valuemin="0" aria-valuemax="100" style="width: #{percent}%")
-          span(class="sr-only").
-            35% Complete
+      div(id="progressBar")
+        include ./includes/progressbar.jade  
       form(id="tokenForm" action="/verify") 
         input(name="uuidCode" type="hidden" id="uuidField" value='' + id)
         input(name="token" type="hidden" id="tokenField") 
-  
-      
-  
