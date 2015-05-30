@@ -12,7 +12,8 @@ block content
       p.access_text.
         SCAN VALID ACCESS TOKENS TO LOG IN
       div(id="progressBar")
-        include ./includes/progressbar.jade  
+        if percent > 0
+          include ./includes/progressbar.jade  
       form(id="tokenForm" action="/verify") 
         input(name="uuidCode" type="hidden" id="uuidField" value='' + id)
         input(name="token" type="hidden" id="tokenField") 
