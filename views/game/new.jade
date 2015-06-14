@@ -1,4 +1,4 @@
-extends ../admin-layout
+extends ../admin-layout 
 
 block content
   h1.game.
@@ -7,7 +7,7 @@ block content
     div(class=errors.name != undefined ? "form-group has-error" : "form-group")
       label(for="nameInput").
         Name
-      input(name="name", placeholder="Name of game..." value= name class="form-control" id="nameInput")
+      input(name="name", placeholder="Name of game..." value= name class="form-control" id="nameInput" autocomplete="off")
     if errors.name
       div(class='has-error')
         p(class='help-block error')
@@ -15,7 +15,7 @@ block content
     div(class=errors.secret != undefined ? "form-group has-error" : "form-group")
       label(for="secretInput").
         Secret text  
-      textarea(name="secret" placeholder="Secret to encrypt" rows="8" class="form-control" id="secretInput")
+      textarea(name="secret" placeholder="Secret to encrypt" rows="8" class="form-control" id="secretInput" autocomplete="off")
         = secret
     if errors.secret
       div(class='has-error')
