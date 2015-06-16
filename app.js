@@ -1,4 +1,5 @@
 var express = require('express');
+var socket_io = require( "socket.io" );
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -15,6 +16,8 @@ var login = require('./routes/login');
 var game = require('./routes/game');
 
 var app = express();
+var io = socket_io();
+app.io = io;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,6 +35,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req,res,next){
     req.db = db;
     next();
+});
+
+app.get('/', function (req, res) {
+  res.render('test');
+});
+
+io.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
 });
 
 app.use('/', routes);
