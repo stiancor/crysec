@@ -22,6 +22,7 @@ module.exports = function(io) {
               var millis = 0;
               loginPlot().forEach(function(entry) {
                  millis += entry[1];
+                 console.log(entry[0]);
                  setTimeout(function() {serverEmitter.emit('successfulLogin', entry[0])}, millis) 
               });
             }
@@ -35,8 +36,7 @@ module.exports = function(io) {
   io.on('connection', function (socket) {
     console.log('############## a user connected');
     serverEmitter.on('successfulLogin', function (data) {
-      console.log(data + '   Connected')
-      io.emit('loggedIn', data);
+      socket.emit('loggedIn', data);
     });
     socket.on('disconnect', function(){
       console.log('user disconnected');
