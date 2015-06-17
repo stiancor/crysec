@@ -54,3 +54,12 @@ div.progress {
 div.has-error .form-control {
 	border-width: 4px;
 }
+
+.console {
+    font-family:Courier;
+    color: #CCCCCC;
+  	background-color: #000000;
+  	border: 3px double #CCCCCC;
+  	padding: 10px;
+  	min-height: 700px;
+}
