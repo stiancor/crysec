@@ -17,7 +17,7 @@ var fakeKey = "LdVps9VrE5bU0nNvN/9iBXz  Drhp4QzaHRSqM5hqjwHgMoXV  Z43DARyIaO6NYU
 	return [['<span style="color: lightblue">Logging on...</span>' + linebreak + linebreak, 1000],
 ['Fetching access rights...' + linebreak + linebreak, 2000],
 [fakeKey, 500],
-['Setting access lever <span style="color: red">COSMIC TOP SECRET</span>' + linebreak,2500],
+['Setting access level <span style="color: red">COSMIC TOP SECRET</span>' + linebreak,2500],
 ['<span style="color: green">Login successful!</span>' + linebreak, 1500],
 ['<span style="color: yellow">Decrypting secret - this might take a while</span>'  + linebreak, 1000],
 ['...',250],
