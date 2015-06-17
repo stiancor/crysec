@@ -13,7 +13,17 @@ block content
         SCAN VALID ACCESS TOKENS TO LOG IN
       div(id="progressBar")
         if percent > 0
-          include ./includes/progressbar.jade  
+          include loginProgress.jade    
       form(id="tokenForm" action="/verify") 
         input(name="uuidCode" type="hidden" id="uuidField" value='' + id)
         input(name="token" type="hidden" id="tokenField") 
+      script.
+        var socket = io.connect('http://localhost:3000');
+        socket.on('loggedIn', function (data) {
+          console.log(data);
+          $('#consoleContent').append(data);
+        });
+      div(class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel")
+        div(class="modal-dialog modal-lg")
+          div(class="modal-content console")
+            div(id="consoleContent")
