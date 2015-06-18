@@ -68,5 +68,5 @@ var fakeKey = "LdVps9VrE5bU0nNvN/9iBXz  Drhp4QzaHRSqM5hqjwHgMoXV  Z43DARyIaO6NYU
 ['.....',320],
 ['....',400],
 ['..',190],
-[linebreak + linebreak + '<span style="color: green;">Secret message was successfully decrypted - redirecting</span>',2500]]
+[linebreak + linebreak + '<span style="color: green;">Secret message was successfully decrypted - redirecting</span>',1200]]
 }

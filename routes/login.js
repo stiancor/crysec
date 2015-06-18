@@ -24,7 +24,7 @@ module.exports = function(io) {
                  millis += entry[1];
                  setTimeout(function() {serverEmitter.emit('successfulLogin', entry[0])}, millis); 
               });
-              setTimeout(function() {serverEmitter.emit('revealSecret', id)}, millis + 1000);
+              setTimeout(function() {serverEmitter.emit('revealSecret', id)}, millis + 4000);
             }
   					res.render('loginProgress', {percent: ((doc.length) / game.threshold)*100})
   				})
