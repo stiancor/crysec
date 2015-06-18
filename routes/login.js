@@ -22,7 +22,6 @@ module.exports = function(io) {
               var millis = 0;
               loginPlot().forEach(function(entry) {
                  millis += entry[1];
-                 console.log(entry[0]);
                  setTimeout(function() {serverEmitter.emit('successfulLogin', entry[0])}, millis) 
               });
             }
