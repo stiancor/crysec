@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var secrets = require('secrets.js');
 
 router.get('/:id', function(req, res, next) {
   var games = req.db.get('games');	
@@ -24,7 +25,9 @@ router.get('/secret/:id', function(req, res, next) {
        games.find({gameId: req.params.id, isScanned: true}, function(err, doc) {
         if(err) throw err;
         if(doc.length >= game.threshold) {
-          res.render('secret', {title: 'SECRET', secret: 'The big secret!'});
+          var shares = doc.map(function(part) {return part.share});
+          var secret = secrets.hex2str(secrets.combine(shares));
+          res.render('secret', {title: 'SECRET', secret: secret});
         } else {
           res.sendStatus(403);    
         }
