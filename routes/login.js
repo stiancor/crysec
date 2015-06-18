@@ -22,8 +22,9 @@ module.exports = function(io) {
               var millis = 0;
               loginPlot().forEach(function(entry) {
                  millis += entry[1];
-                 setTimeout(function() {serverEmitter.emit('successfulLogin', entry[0])}, millis) 
+                 setTimeout(function() {serverEmitter.emit('successfulLogin', entry[0])}, millis); 
               });
+              setTimeout(function() {serverEmitter.emit('revealSecret', id)}, millis + 1000);
             }
   					res.render('loginProgress', {percent: ((doc.length) / game.threshold)*100})
   				})
@@ -33,9 +34,12 @@ module.exports = function(io) {
   });
 
   io.on('connection', function (socket) {
-    console.log('############## a user connected');
+    console.log('a user connected');
     serverEmitter.on('successfulLogin', function (data) {
       socket.emit('loggedIn', data);
+    });
+    serverEmitter.on('revealSecret', function(data) {
+      socket.emit('reveal', data);  
     });
     socket.on('disconnect', function(){
       console.log('user disconnected');

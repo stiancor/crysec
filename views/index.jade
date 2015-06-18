@@ -2,8 +2,8 @@ extends layout
 
 block content
  div(class="header clearfix")
-   div.jumbotron
-    block content
+  block content
+    div.login_content_box
       img(src='/images/1020px-CIA.svg.png'  height="300" width="300" class="login_logo")
       p
         | RESTRICTED ACCESS 
@@ -20,9 +20,11 @@ block content
       script.
         var socket = io.connect('http://localhost:3000');
         socket.on('loggedIn', function (data) {
-          console.log(data);
           $('#consoleContent').append(data);
         });
+        socket.on('reveal', function (data) {
+          window.location.href="/secret/" + data;
+        })
       div(class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel")
         div(class="modal-dialog modal-lg")
           div(class="modal-content console")

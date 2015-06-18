@@ -51,6 +51,10 @@ div.progress {
     margin-right: auto;
 }
 
+.login_content_box {
+	padding-top: 200px;
+}
+
 div.has-error .form-control {
 	border-width: 4px;
 }
@@ -69,4 +73,46 @@ div.has-error .form-control {
     color: #CCCCCC;
   	background-color: #000000;
   	border: none;
+}
+
+div.secret {
+	margin: auto;
+	top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  	display: block;
+}
+
+div.secret::after {
+    content: "";
+  	background: url(/images/1020px-CIA.svg.png);
+  	background-size: 800px 800px;
+  	background-repeat: no-repeat;
+  	background-position: center;
+  	opacity: 0.2;
+  	top: 0;
+  	left: 0;
+  	bottom: 0;
+  	right: 0;
+  	position: absolute;
+  	z-index: -1;   
+}
+
+div.message {
+	background-color: #E4E9F2;
+	position: absolute;
+	top: 25%;
+  	left: 25%;
+  	bottom: 25%;
+  	right: 25%;
+    margin: auto;
+    border-radius: 10px;
+    border: 3px solid #76650D;
+    padding: 50px; 
+}
+
+#secretText {
+	text-align: left;
+	color: #333;
 }

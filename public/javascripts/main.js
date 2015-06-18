@@ -27,3 +27,16 @@ $("#tokenField").keypress(function(e){
         e.preventDefault();
     }
 });
+
+var addTextByDelay = function(text,elem){
+    var delay = 100;
+    if(text.length >0){
+        elem.append(text[0]);
+        setTimeout(
+            function(){
+                //Slice text by 1 character and call function again                
+                addTextByDelay(text.slice(1),elem,delay);            
+             },delay                 
+        );
+    }
+}
