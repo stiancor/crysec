@@ -63,3 +63,10 @@ div.has-error .form-control {
   	padding: 10px;
   	min-height: 700px;
 }
+
+.console pre {
+	font-family:Courier;
+    color: #CCCCCC;
+  	background-color: #000000;
+  	border: none;
+}
