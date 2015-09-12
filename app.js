@@ -37,10 +37,6 @@ app.use(function(req,res,next){
     next();
 });
 
-app.get('/', function (req, res) {
-  res.render('test');
-});
-
 app.use('/', routes);
 app.use('/verify', login(io));
 app.use('/game', game);
